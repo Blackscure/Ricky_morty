@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
-import { RolesView  } from 'src/sections/roles/';
+import { CharactersView } from 'src/sections/characters';
 
 // ----------------------------------------------------------------------
 
@@ -11,7 +11,7 @@ export default function RolesPage() {
         <title> Characters | Ricky Morty </title>
       </Helmet>
 
-      <RolesView />
+      <CharactersView />
     </>
   );
 }
