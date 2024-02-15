@@ -23,6 +23,11 @@ const navConfig = [
     path: '/roles',
     icon: icon('oui:app-users-roles'),
   },
+  {
+    title: 'characters',
+    path: '/characters',
+    icon: icon('arcticons:character-pad'),
+  },
   
 
   // {
