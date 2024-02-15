@@ -106,7 +106,7 @@ const CharactersPage = () => {
       <CardMedia
         component="img"
         alt={character.name}
-        height="140"
+        height="100%"
         image={character.image}
       />
       <CardContent>
@@ -152,8 +152,6 @@ const CharactersPage = () => {
         </Typography>
       </CardContent>
     </Card>
-
-   
     </Box>
   );
 };
