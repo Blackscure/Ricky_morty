@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense} from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import DashboardLayout from 'src/layouts/dashboard';
@@ -66,13 +66,7 @@ export default function Router() {
     },
   ]);
 
-  // Automatically redirect to login on the initial load
-  useEffect(() => {
-    if (window.location.pathname === '/') {
-      // Redirect only if the path is the root
-      window.location.replace('/login');
-    }
-  }, []);
+
 
   return routes;
 }
