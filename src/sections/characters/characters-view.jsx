@@ -1,52 +1,97 @@
-import axios from 'axios';
-import { useState, useEffect } from 'react';
-
 import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import Table from '@mui/material/Table';
-import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import TableRow from '@mui/material/TableRow';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import { CircularProgress } from '@mui/material';
+import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import TableContainer from '@mui/material/TableContainer';
+import CardContent from '@mui/material/CardContent';
 
 import Iconify from 'src/components/iconify';
 
-
+const character = {
+    
+        "id": 1,
+        "name": "Rick Sanchez",
+        "status": "Alive",
+        "species": "Human",
+        "type": "",
+        "gender": "Male",
+        "origin": {
+            "name": "Earth (C-137)",
+            "url": "https://rickandmortyapi.com/api/location/1"
+        },
+        "location": {
+            "name": "Citadel of Ricks",
+            "url": "https://rickandmortyapi.com/api/location/3"
+        },
+        "image": "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+        "episode": [
+            "https://rickandmortyapi.com/api/episode/1",
+            "https://rickandmortyapi.com/api/episode/2",
+            "https://rickandmortyapi.com/api/episode/3",
+            "https://rickandmortyapi.com/api/episode/4",
+            "https://rickandmortyapi.com/api/episode/5",
+            "https://rickandmortyapi.com/api/episode/6",
+            "https://rickandmortyapi.com/api/episode/7",
+            "https://rickandmortyapi.com/api/episode/8",
+            "https://rickandmortyapi.com/api/episode/9",
+            "https://rickandmortyapi.com/api/episode/10",
+            "https://rickandmortyapi.com/api/episode/11",
+            "https://rickandmortyapi.com/api/episode/12",
+            "https://rickandmortyapi.com/api/episode/13",
+            "https://rickandmortyapi.com/api/episode/14",
+            "https://rickandmortyapi.com/api/episode/15",
+            "https://rickandmortyapi.com/api/episode/16",
+            "https://rickandmortyapi.com/api/episode/17",
+            "https://rickandmortyapi.com/api/episode/18",
+            "https://rickandmortyapi.com/api/episode/19",
+            "https://rickandmortyapi.com/api/episode/20",
+            "https://rickandmortyapi.com/api/episode/21",
+            "https://rickandmortyapi.com/api/episode/22",
+            "https://rickandmortyapi.com/api/episode/23",
+            "https://rickandmortyapi.com/api/episode/24",
+            "https://rickandmortyapi.com/api/episode/25",
+            "https://rickandmortyapi.com/api/episode/26",
+            "https://rickandmortyapi.com/api/episode/27",
+            "https://rickandmortyapi.com/api/episode/28",
+            "https://rickandmortyapi.com/api/episode/29",
+            "https://rickandmortyapi.com/api/episode/30",
+            "https://rickandmortyapi.com/api/episode/31",
+            "https://rickandmortyapi.com/api/episode/32",
+            "https://rickandmortyapi.com/api/episode/33",
+            "https://rickandmortyapi.com/api/episode/34",
+            "https://rickandmortyapi.com/api/episode/35",
+            "https://rickandmortyapi.com/api/episode/36",
+            "https://rickandmortyapi.com/api/episode/37",
+            "https://rickandmortyapi.com/api/episode/38",
+            "https://rickandmortyapi.com/api/episode/39",
+            "https://rickandmortyapi.com/api/episode/40",
+            "https://rickandmortyapi.com/api/episode/41",
+            "https://rickandmortyapi.com/api/episode/42",
+            "https://rickandmortyapi.com/api/episode/43",
+            "https://rickandmortyapi.com/api/episode/44",
+            "https://rickandmortyapi.com/api/episode/45",
+            "https://rickandmortyapi.com/api/episode/46",
+            "https://rickandmortyapi.com/api/episode/47",
+            "https://rickandmortyapi.com/api/episode/48",
+            "https://rickandmortyapi.com/api/episode/49",
+            "https://rickandmortyapi.com/api/episode/50",
+            "https://rickandmortyapi.com/api/episode/51"
+        ],
+        "url": "https://rickandmortyapi.com/api/character/1",
+        "created": "2017-11-04T18:48:46.250Z"
+    
+}
 
 const CharactersPage = () => {
   // eslint-disable-next-line no-unused-vars
-  const [openRole, setOpenRole] = useState(false);
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+
 
   const handleOpenRole = () => {
-    setOpenRole(true);
+   
   };
 
  
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/apps/api/v1/authentication/roles/');
-      console.log('Response:', response.data);
-      setData(response.data.data); // Access 'data' property in the response
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  
-
-  useEffect(() => {
-    fetchData();
-  }, []); // Fetch data on component mount
 
   return (
     <Box>
@@ -56,48 +101,57 @@ const CharactersPage = () => {
         <Button variant="contained" onClick={handleOpenRole} color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
           Add Role
         </Button>
-       
       </Stack>
-
-      {loading ? (
-        <CircularProgress />
-      ) : (
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <TableCell>#</TableCell>
-                <TableCell align="right">Role Name</TableCell>
-                <TableCell align="right">Description</TableCell>
-                <TableCell align="right">Action</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={4}>No Roles</TableCell>
-                </TableRow>
-              ) : (
-                data.map((row) => (
-                  // Render your table rows based on the data
-                  <TableRow key={row.id}>
-                    {/* Display your data in the cells */}
-                    <TableCell>{row.id}</TableCell>
-                    <TableCell align="right">{row.role_name}</TableCell>
-                    <TableCell align="right">{row.description}</TableCell>
-                    <TableCell align="right">
-                      <IconButton>
-                        <Iconify icon="eva:more-vertical-fill" />
-                      </IconButton>
-                      {/* Rest of your menu and actions */}
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      )}
+      <Card sx={{ maxWidth: 345 }}>
+      <CardMedia
+        component="img"
+        alt={character.name}
+        height="100%"
+        image={character.image}
+      />
+      <CardContent>
+        <Typography variant="h6" component="div">
+          {character.name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          ID: {character.id}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Status: {character.status}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Species: {character.species}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Type: {character.type || 'N/A'}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Gender: {character.gender}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Origin: {character.origin.name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Location: {character.location.name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Episodes:
+          <ul>
+            {character.episode.map((episode, index) => (
+              <li key={index}>
+                <a href={episode}>{episode}</a>
+              </li>
+            ))}
+          </ul>
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          URL: <a href={character.url}>{character.url}</a>
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Created: {character.created}
+        </Typography>
+      </CardContent>
+    </Card>
     </Box>
   );
 };
