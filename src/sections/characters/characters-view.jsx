@@ -56,6 +56,7 @@ const CharactersPage = () => {
         <Button variant="contained" onClick={handleOpenRole} color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
           Add Role
         </Button>
+       
       </Stack>
 
       {loading ? (
@@ -101,4 +102,4 @@ const CharactersPage = () => {
   );
 };
 
-export default  CharactersPage;
+export default CharactersPage;
