@@ -160,6 +160,7 @@ export default function LocationPage() {
                 headLabel={[
                   { id: 'name', label: 'Name' },
                   { id: 'type', label: 'Type' },
+                  { id: 'dimension', label: 'Dimension' },
                   { id: 'residents', label: 'residents' },
                 ]}
               />
@@ -171,6 +172,7 @@ export default function LocationPage() {
                       key={location.id}
                       name={location.name}
                       role={location.type}
+                      dimension={location.dimension}
                       residents={location.residents}
                       selected={selected.indexOf(location.name) !== -1}
                       handleClick={(event) => handleClick(event, location.name)}
