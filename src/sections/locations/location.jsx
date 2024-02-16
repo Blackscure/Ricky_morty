@@ -86,7 +86,6 @@ const character = {
 const LocationPage = () => {
   // eslint-disable-next-line no-unused-vars
 
-
   const handleOpenRole = () => {
    
   };
