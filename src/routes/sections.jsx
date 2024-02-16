@@ -11,6 +11,7 @@ export const RegisterPage = lazy(() => import('src/pages/register'));
 export const CreateUserPage = lazy(() => import('src/pages/create-user'));
 export const RolesPage = lazy(() => import('src/pages/roles'));
 export const CharactersPage = lazy(() => import('src/pages/characters'));
+export const LocationsPage = lazy(() => import('src/pages/location'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
 // ----------------------------------------------------------------------
@@ -39,6 +40,11 @@ export default function Router() {
         {
           path: 'characters',
           element: <CharactersPage/>,
+        },
+
+        {
+          path: 'locations',
+          element: <LocationsPage/>,
         },
       ],
     },
