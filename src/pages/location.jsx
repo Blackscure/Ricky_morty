@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
-import { LocationView } from 'src/sections/locations';
+import { LocationView } from 'src/sections/locations/view';
 
 // ----------------------------------------------------------------------
 
