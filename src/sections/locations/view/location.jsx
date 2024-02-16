@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-shadow */
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
@@ -42,9 +44,12 @@ export default function LocationPage() {
 
   const [locations, setLocations] = useState([]);
 
+  const [error, setError] = useState(null);
+
+
+  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(true);
   
-  const [error, setError] = useState(null);
 
 
   const router = useRouter();
@@ -154,27 +159,21 @@ export default function LocationPage() {
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'name', label: 'Name' },
-                  { id: 'company', label: 'Company' },
-                  { id: 'role', label: 'Role' },
-                  { id: 'isVerified', label: 'Verified', align: 'center' },
-                  { id: 'status', label: 'Status' },
-                  { id: '' },
+                  { id: 'type', label: 'Type' },
+                  { id: 'residents', label: 'residents' },
                 ]}
               />
               <TableBody>
-                {dataFiltered
+                {locations
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => (
+                  .map((location) => (
                     <UserTableRow
-                      key={row.id}
-                      name={row.name}
-                      role={row.role}
-                      status={row.status}
-                      company={row.company}
-                      avatarUrl={row.avatarUrl}
-                      isVerified={row.isVerified}
-                      selected={selected.indexOf(row.name) !== -1}
-                      handleClick={(event) => handleClick(event, row.name)}
+                      key={location.id}
+                      name={location.name}
+                      role={location.type}
+                      residents={location.residents}
+                      selected={selected.indexOf(location.name) !== -1}
+                      handleClick={(event) => handleClick(event, location.name)}
                     />
                   ))}
 
