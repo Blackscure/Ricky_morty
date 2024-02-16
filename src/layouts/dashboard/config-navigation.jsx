@@ -28,6 +28,12 @@ const navConfig = [
     path: '/characters',
     icon: icon('arcticons:character-pad'),
   },
+
+  {
+    title: 'locations',
+    path: '/locations',
+    icon: icon('arcticons:character-pad'),
+  },
   
 
   // {

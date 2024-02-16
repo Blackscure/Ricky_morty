@@ -83,7 +83,7 @@ const character = {
     
 }
 
-const CharactersPage = () => {
+const LocationPage = () => {
   // eslint-disable-next-line no-unused-vars
 
 
@@ -156,4 +156,4 @@ const CharactersPage = () => {
   );
 };
 
-export default CharactersPage;
+export default LocationPage ;
