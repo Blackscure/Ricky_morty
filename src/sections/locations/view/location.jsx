@@ -133,7 +133,7 @@ export default function LocationPage() {
   return (
     <Box>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography variant="h4">Users</Typography>
+        <Typography variant="h4">Locations</Typography>
 
         <Button variant="contained" onClick={goToCreateUser} color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
           New User
@@ -160,6 +160,7 @@ export default function LocationPage() {
                 headLabel={[
                   { id: 'name', label: 'Name' },
                   { id: 'type', label: 'Type' },
+                
                  
                 ]}
               />
@@ -170,7 +171,7 @@ export default function LocationPage() {
                     <UserTableRow
                       key={location.id}
                       name={location.name}
-                      role={location.type}
+                      type={location.type}
                       selected={selected.indexOf(location.name) !== -1}
                       handleClick={(event) => handleClick(event, location.name)}
                     />
@@ -190,7 +191,7 @@ export default function LocationPage() {
         <TablePagination
           page={page}
           component="div"
-          count={users.length}
+          count={locations.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}

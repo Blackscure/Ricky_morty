@@ -11,44 +11,36 @@ import Typography from '@mui/material/Typography';
 
 // ----------------------------------------------------------------------
 
-export default function UserTableRow({
+export default function LocationTableRow({
   selected,
   name,
   type,
-  role,
   handleClick,
 }) {
-
-
   return (
     <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
-        <TableCell padding="checkbox">
-          <Checkbox disableRipple checked={selected} onChange={handleClick} />
-        </TableCell>
+      <TableCell padding="checkbox">
+        <Checkbox disableRipple checked={selected} onChange={handleClick} />
+      </TableCell>
 
-        <TableCell component="th" scope="row" padding="none">
-          <Stack direction="row" alignItems="center" spacing={2}>
-         
-            <Typography variant="subtitle2" noWrap >
-              {name}
-            </Typography>
-          </Stack>
-        </TableCell>
+      <TableCell component="th" scope="row" padding="none">
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <Typography variant="subtitle2" noWrap>
+            {name}
+          </Typography>
+        </Stack>
+      </TableCell>
 
-      
-        <TableCell>{role}</TableCell>
-
-      
-
-      </TableRow>
+      <TableCell>{type}</TableCell>
+    </TableRow>
   );
 }
 
-UserTableRow.propTypes = {
+
+LocationTableRow.propTypes = {
   type: PropTypes.any,
   handleClick: PropTypes.func,
   name: PropTypes.any,
-  role: PropTypes.any,
   selected: PropTypes.any,
  
 };
