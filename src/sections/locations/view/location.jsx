@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
@@ -40,11 +41,28 @@ export default function LocationPage() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [locations, setLocations] = useState([]);
+
   const [loading, setLoading] = useState(true);
+  
   const [error, setError] = useState(null);
 
 
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const response = await axios.get(`https://rickandmortyapi.com/api/location?page=${page + 1}`);
+        setLocations(response.data.results);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchLocations();
+  }, [page]);
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
