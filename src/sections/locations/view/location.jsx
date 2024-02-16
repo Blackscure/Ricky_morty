@@ -119,7 +119,7 @@ export default function LocationPage() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: users,
+    inputData: locations,
     comparator: getComparator(order, orderBy),
     filterName,
   });
