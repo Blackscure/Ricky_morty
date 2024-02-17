@@ -19,10 +19,11 @@ import Scrollbar from 'src/components/scrollbar';
 
 import TableNoData from '../table-no-data';
 import UserTableRow from '../character-table-row';
-import UserTableHead from '../characyer-table-head';
+import UserTableHead from '../character-table-head';
 import TableEmptyRows from '../table-empty-rows';
-import UserTableToolbar from '../user-table-toolbar';
+import UserTableToolbar from '../character-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
+import { Box } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -103,7 +104,7 @@ export default function CharactersPage() {
   }
 
   return (
-    <Container>
+    <Box>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Users</Typography>
 
@@ -176,6 +177,6 @@ export default function CharactersPage() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Card>
-    </Container>
+    </Box>
   );
 }
