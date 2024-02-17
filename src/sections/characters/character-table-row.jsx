@@ -23,6 +23,7 @@ export default function UserTableRow({
   origin,
   status,
   image,
+  location,
   handleClick,
 }) {
   const [open, setOpen] = useState(null);
@@ -59,6 +60,7 @@ export default function UserTableRow({
 
     
         <TableCell>{origin}</TableCell>
+        <TableCell>{location}</TableCell>
 
         
 
@@ -97,5 +99,6 @@ UserTableRow.propTypes = {
   name: PropTypes.any,
   origin: PropTypes.any,
   selected: PropTypes.any,
+  location: PropTypes.any,
   status: PropTypes.string,
 };
