@@ -1,57 +1,43 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Box } from '@mui/material';
 import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
-import Button from '@mui/material/Button';
 import TableBody from '@mui/material/TableBody';
-import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
-import { useRouter } from 'src/routes/hooks';
-
-import { users } from 'src/_mock/user';
-
-import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 
-import TableNoData from '../table-no-data';
-import TableEmptyRows from '../table-empty-rows';
-import UserTableRow from '../character-table-row';
-import UserTableHead from '../character-table-head';
-import UserTableToolbar from '../character-table-toolbar';
-import { emptyRows, applyFilter, getComparator } from '../utils';
+import CharacterTableRow from '../character-table-row';
+import CharacterTableHead from '../character-table-head';
+import CharacterTableToolbar from '../character-table-toolbar';
 
-// ----------------------------------------------------------------------
-
-export default function CharactersPage() {
-  const [page, setPage] = useState(0);
-
+const CharactersPage = () => {
+  const [characters, setCharacters] = useState([]);
   const [order, setOrder] = useState('asc');
-
-  const [selected, setSelected] = useState([]);
-
   const [orderBy, setOrderBy] = useState('name');
-
+  const [selected, setSelected] = useState([]);
   const [filterName, setFilterName] = useState('');
-
+  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const router = useRouter();
+  useEffect(() => {
+    // Fetch data from the Rick and Morty API
+    fetch('https://rickandmortyapi.com/api/character')
+      .then((response) => response.json())
+      .then((data) => setCharacters(data.results));
+  }, []);
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
-    if (id !== '') {
-      setOrder(isAsc ? 'desc' : 'asc');
-      setOrderBy(id);
-    }
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(id);
   };
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = users.map((n) => n.name);
+      const newSelecteds = characters.map((character) => character.name);
       setSelected(newSelecteds);
       return;
     }
@@ -90,30 +76,17 @@ export default function CharactersPage() {
     setFilterName(event.target.value);
   };
 
-  const dataFiltered = applyFilter({
-    inputData: users,
-    comparator: getComparator(order, orderBy),
-    filterName,
-  });
+  const dataFiltered = characters.filter((character) =>
+    character.name.toLowerCase().includes(filterName.toLowerCase())
+  );
 
-  const notFound = !dataFiltered.length && !!filterName;
-
-  const goToCreateUser = () => {
-    router.push('/create-user');
-  }
 
   return (
     <Box>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography variant="h4">Users</Typography>
-
-        <Button variant="contained" onClick={goToCreateUser} color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
-          New User
-        </Button>
-      </Stack>
+      {/* ... (existing code) */}
 
       <Card>
-        <UserTableToolbar
+        <CharacterTableToolbar
           numSelected={selected.length}
           filterName={filterName}
           onFilterName={handleFilterByName}
@@ -122,45 +95,30 @@ export default function CharactersPage() {
         <Scrollbar>
           <TableContainer sx={{ overflow: 'unset' }}>
             <Table sx={{ minWidth: 800 }}>
-              <UserTableHead
+              <CharacterTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={users.length}
+                rowCount={characters.length}
                 numSelected={selected.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'name', label: 'Name' },
-                  { id: 'company', label: 'Company' },
-                  { id: 'role', label: 'Role' },
-                  { id: 'isVerified', label: 'Verified', align: 'center' },
-                  { id: 'status', label: 'Status' },
-                  { id: '' },
+                  // ... other columns
                 ]}
               />
               <TableBody>
                 {dataFiltered
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => (
-                    <UserTableRow
-                      key={row.id}
-                      name={row.name}
-                      role={row.role}
-                      status={row.status}
-                      company={row.company}
-                      avatarUrl={row.avatarUrl}
-                      isVerified={row.isVerified}
-                      selected={selected.indexOf(row.name) !== -1}
-                      handleClick={(event) => handleClick(event, row.name)}
+                  .map((character) => (
+                    <CharacterTableRow
+                      key={character.id}
+                      name={character.name}
+                      // ... other columns
+                      selected={selected.indexOf(character.name) !== -1}
+                      handleClick={(event) => handleClick(event, character.name)}
                     />
                   ))}
-
-                <TableEmptyRows
-                  height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, users.length)}
-                />
-
-                {notFound && <TableNoData query={filterName} />}
               </TableBody>
             </Table>
           </TableContainer>
@@ -169,7 +127,7 @@ export default function CharactersPage() {
         <TablePagination
           page={page}
           component="div"
-          count={users.length}
+          count={characters.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}
@@ -178,4 +136,6 @@ export default function CharactersPage() {
       </Card>
     </Box>
   );
-}
+};
+
+export default CharactersPage;
