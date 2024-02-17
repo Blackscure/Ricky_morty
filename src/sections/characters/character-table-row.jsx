@@ -10,6 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 
+import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
@@ -48,7 +49,9 @@ export default function UserTableRow({
           </Stack>
         </TableCell>
 
-        <TableCell>{status}</TableCell>
+        <TableCell>
+          <Label color={(status === 'status' && 'error') || 'success'}>{status}</Label>
+        </TableCell>
 
         <TableCell>{species}</TableCell>
 
