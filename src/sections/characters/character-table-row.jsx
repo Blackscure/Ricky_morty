@@ -55,9 +55,7 @@ export default function UserTableRow({
 
         <TableCell>{gender}</TableCell>
 
-        <TableCell align="center">{origin}</TableCell>
-
-
+    
         <TableCell>{origin}</TableCell>
 
         

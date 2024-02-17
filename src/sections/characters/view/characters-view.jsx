@@ -107,8 +107,7 @@ const CharactersPage = () => {
                   { id: 'status', label: 'Status' },
                   { id: 'species', label: 'Species' },
                   { id: 'gender', label: 'Gender' },
-                  { id: 'name', label: 'Location Name' },
-                  { id: 'image', label: 'image' },
+                  { id: 'origin', label: 'Origin' },
                   // ... other columns
                 ]}
               />
@@ -123,7 +122,6 @@ const CharactersPage = () => {
                       status={character.status}
                       gender={character.gender}
                       origin={character.origin.name}
-                      image={character.origin.image}
                       // ... other columns
                       selected={selected.indexOf(character.name) !== -1}
                       handleClick={(event) => handleClick(event, character.name)}
