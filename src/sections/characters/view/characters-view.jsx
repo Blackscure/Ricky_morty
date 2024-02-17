@@ -104,6 +104,11 @@ const CharactersPage = () => {
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'name', label: 'Name' },
+                  { id: 'status', label: 'Status' },
+                  { id: 'species', label: 'Species' },
+                  { id: 'gender', label: 'Gender' },
+                  { id: 'name', label: 'Location Name' },
+                  { id: 'image', label: 'image' },
                   // ... other columns
                 ]}
               />
@@ -114,6 +119,11 @@ const CharactersPage = () => {
                     <CharacterTableRow
                       key={character.id}
                       name={character.name}
+                      species={character.species}
+                      status={character.status}
+                      gender={character.gender}
+                      origin={character.origin.name}
+                      image={character.origin.image}
                       // ... other columns
                       selected={selected.indexOf(character.name) !== -1}
                       handleClick={(event) => handleClick(event, character.name)}

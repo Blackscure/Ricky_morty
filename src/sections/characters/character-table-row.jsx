@@ -11,7 +11,6 @@ import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
-import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
@@ -20,10 +19,11 @@ export default function UserTableRow({
   selected,
   name,
   avatarUrl,
-  company,
-  role,
-  isVerified,
+  species,
+  gender,
+  origin,
   status,
+  image,
   handleClick,
 }) {
   const [open, setOpen] = useState(null);
@@ -52,15 +52,17 @@ export default function UserTableRow({
           </Stack>
         </TableCell>
 
-        <TableCell>{company}</TableCell>
+        <TableCell>{species}</TableCell>
 
-        <TableCell>{role}</TableCell>
+        <TableCell>{gender}</TableCell>
 
-        <TableCell align="center">{isVerified ? 'Yes' : 'No'}</TableCell>
+        <TableCell align="center">{origin}</TableCell>
 
-        <TableCell>
-          <Label color={(status === 'banned' && 'error') || 'success'}>{status}</Label>
-        </TableCell>
+        <TableCell>{status}</TableCell>
+
+        <TableCell>{origin}</TableCell>
+
+        
 
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
@@ -95,11 +97,12 @@ export default function UserTableRow({
 
 UserTableRow.propTypes = {
   avatarUrl: PropTypes.any,
-  company: PropTypes.any,
+  species: PropTypes.any,
   handleClick: PropTypes.func,
-  isVerified: PropTypes.any,
+  gender: PropTypes.any,
   name: PropTypes.any,
-  role: PropTypes.any,
+  origin: PropTypes.any,
+  image: PropTypes.any,
   selected: PropTypes.any,
   status: PropTypes.string,
 };
