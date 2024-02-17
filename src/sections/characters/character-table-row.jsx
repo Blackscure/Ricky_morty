@@ -17,7 +17,6 @@ import Iconify from 'src/components/iconify';
 export default function UserTableRow({
   selected,
   name,
-  avatarUrl,
   species,
   gender,
   origin,
@@ -42,7 +41,7 @@ export default function UserTableRow({
 
         <TableCell component="th" scope="row" padding="none">
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name} src={avatarUrl} />
+            <Avatar alt={name} src={image} />
             <Typography variant="subtitle2" noWrap>
               {name}
             </Typography>
@@ -88,13 +87,12 @@ export default function UserTableRow({
 }
 
 UserTableRow.propTypes = {
-  avatarUrl: PropTypes.any,
+  image: PropTypes.any,
   species: PropTypes.any,
   handleClick: PropTypes.func,
   gender: PropTypes.any,
   name: PropTypes.any,
   origin: PropTypes.any,
-  image: PropTypes.any,
   selected: PropTypes.any,
   status: PropTypes.string,
 };

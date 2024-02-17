@@ -117,6 +117,7 @@ const CharactersPage = () => {
                   .map((character) => (
                     <CharacterTableRow
                       key={character.id}
+                      image={character.image}
                       name={character.name}
                       species={character.species}
                       status={character.status}
