@@ -105,7 +105,9 @@ const CharactersPage = () => {
                 headLabel={[
                   { id: 'name', label: 'Name' },
                   { id: 'episode', label: 'Episode' },
+                  { id: 'characters', label: 'Characters' },
                   { id: 'air_date', label: 'Air Date' },
+
                
                   // ... other columns
                 ]}
@@ -118,6 +120,7 @@ const CharactersPage = () => {
                       key={episode.id}
                       name={episode.name}
                       episode={episode.episode}
+                      characters={episode.characters.url}
                       air_date={episode.air_date}
                       // ... other columns
                       selected={selected.indexOf(episode.name) !== -1}

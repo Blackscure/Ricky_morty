@@ -44,10 +44,10 @@ export default function EpisodeTableRow({
             </Typography>
           </Stack>
         </TableCell>
-        <TableCell>{air_date}</TableCell>
-
         <TableCell>{episode}</TableCell>
         <TableCell><Button variant='outlined'>Characters</Button></TableCell>
+        <TableCell>{air_date}</TableCell>
+       
       </TableRow>
 
       <Popover
