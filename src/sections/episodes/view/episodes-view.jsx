@@ -9,12 +9,12 @@ import TablePagination from '@mui/material/TablePagination';
 
 import Scrollbar from 'src/components/scrollbar';
 
-import CharacterTableRow from '../character-table-row';
-import CharacterTableHead from '../character-table-head';
-import CharacterTableToolbar from '../character-table-toolbar';
+import EpisodeTableRow from '../episode-table-row';
+import EpisodeTableHead from '../episode-table-head';
+import EpisodeTableToolbar from '../episode-table-toolbar';
 
 const CharactersPage = () => {
-  const [characters, setCharacters] = useState([]);
+  const [episodes, setEpisodes] = useState([]);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('name');
   const [selected, setSelected] = useState([]);
@@ -24,9 +24,9 @@ const CharactersPage = () => {
 
   useEffect(() => {
     // Fetch data from the Rick and Morty API
-    fetch('https://rickandmortyapi.com/api/character')
+    fetch('https://rickandmortyapi.com/api/episode')
       .then((response) => response.json())
-      .then((data) => setCharacters(data.results));
+      .then((data) => setEpisodes(data.results));
   }, []);
 
   const handleSort = (event, id) => {
@@ -37,7 +37,7 @@ const CharactersPage = () => {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = characters.map((character) => character.name);
+      const newSelecteds = episodes.map((episode) => episode.name);
       setSelected(newSelecteds);
       return;
     }
@@ -76,8 +76,8 @@ const CharactersPage = () => {
     setFilterName(event.target.value);
   };
 
-  const dataFiltered = characters.filter((character) =>
-    character.name.toLowerCase().includes(filterName.toLowerCase())
+  const dataFiltered = episodes.filter((episode) =>
+    episode.name.toLowerCase().includes(filterName.toLowerCase())
   );
 
 
@@ -86,7 +86,7 @@ const CharactersPage = () => {
       {/* ... (existing code) */}
 
       <Card>
-        <CharacterTableToolbar
+        <EpisodeTableToolbar
           numSelected={selected.length}
           filterName={filterName}
           onFilterName={handleFilterByName}
@@ -95,39 +95,36 @@ const CharactersPage = () => {
         <Scrollbar>
           <TableContainer sx={{ overflow: 'unset' }}>
             <Table sx={{ minWidth: 800 }}>
-              <CharacterTableHead
+              <EpisodeTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={characters.length}
+                rowCount={episodes.length}
                 numSelected={selected.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
                   { id: 'name', label: 'Name' },
-                  { id: 'status', label: 'Status' },
-                  { id: 'species', label: 'Species' },
-                  { id: 'gender', label: 'Gender' },
-                  { id: 'origin', label: 'Origin' },
-                  { id: 'location', label: 'Location' },
+                  { id: 'episode', label: 'Episode' },
+                  { id: 'characters', label: 'Characters' },
+                  { id: 'air_date', label: 'Air Date' },
+
+               
                   // ... other columns
                 ]}
               />
               <TableBody>
                 {dataFiltered
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((character) => (
-                    <CharacterTableRow
-                      key={character.id}
-                      image={character.image}
-                      name={character.name}
-                      species={character.species}
-                      status={character.status}
-                      gender={character.gender}
-                      origin={character.origin.name}
-                      location={character.location.name}
+                  .map((episode) => (
+                    <EpisodeTableRow
+                      key={episode.id}
+                      name={episode.name}
+                      episode={episode.episode}
+                      characters={episode.characters.url}
+                      air_date={episode.air_date}
                       // ... other columns
-                      selected={selected.indexOf(character.name) !== -1}
-                      handleClick={(event) => handleClick(event, character.name)}
+                      selected={selected.indexOf(episode.name) !== -1}
+                      handleClick={(event) => handleClick(event, episode.name)}
                     />
                   ))}
               </TableBody>
@@ -138,7 +135,7 @@ const CharactersPage = () => {
         <TablePagination
           page={page}
           component="div"
-          count={characters.length}
+          count={episodes.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}

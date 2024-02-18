@@ -2,35 +2,28 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
 import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 
-import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function UserTableRow({
+export default function EpisodeTableRow({
   selected,
   name,
-  image,
-  company,
-  role,
-  isVerified,
-  status,
+  air_date,
+  episode,
   handleClick,
 }) {
   const [open, setOpen] = useState(null);
 
-  const handleOpenMenu = (event) => {
-    setOpen(event.currentTarget);
-  };
+ 
 
   const handleCloseMenu = () => {
     setOpen(null);
@@ -45,28 +38,16 @@ export default function UserTableRow({
 
         <TableCell component="th" scope="row" padding="none">
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name} src={image} />
+            {/* <Avatar alt={name} src={image} /> */}
             <Typography variant="subtitle2" noWrap>
               {name}
             </Typography>
           </Stack>
         </TableCell>
-
-        <TableCell>{company}</TableCell>
-
-        <TableCell>{role}</TableCell>
-
-        <TableCell align="center">{isVerified ? 'Yes' : 'No'}</TableCell>
-
-        <TableCell>
-          <Label color={(status === 'banned' && 'error') || 'success'}>{status}</Label>
-        </TableCell>
-
-        <TableCell align="right">
-          <IconButton onClick={handleOpenMenu}>
-            <Iconify icon="eva:more-vertical-fill" />
-          </IconButton>
-        </TableCell>
+        <TableCell>{episode}</TableCell>
+        <TableCell><Button variant='outlined'>Characters</Button></TableCell>
+        <TableCell>{air_date}</TableCell>
+       
       </TableRow>
 
       <Popover
@@ -93,13 +74,11 @@ export default function UserTableRow({
   );
 }
 
-UserTableRow.propTypes = {
-  image: PropTypes.any,
-  company: PropTypes.any,
+EpisodeTableRow.propTypes = {
+  air_date: PropTypes.any,
   handleClick: PropTypes.func,
-  isVerified: PropTypes.any,
   name: PropTypes.any,
-  role: PropTypes.any,
   selected: PropTypes.any,
-  status: PropTypes.string,
+  episode: PropTypes.any,
+
 };

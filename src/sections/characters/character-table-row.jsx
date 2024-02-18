@@ -9,8 +9,8 @@ import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 
+import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
@@ -18,19 +18,17 @@ import Iconify from 'src/components/iconify';
 export default function UserTableRow({
   selected,
   name,
-  avatarUrl,
   species,
   gender,
   origin,
   status,
   image,
+  location,
   handleClick,
 }) {
   const [open, setOpen] = useState(null);
 
-  const handleOpenMenu = (event) => {
-    setOpen(event.currentTarget);
-  };
+ 
 
   const handleCloseMenu = () => {
     setOpen(null);
@@ -45,30 +43,28 @@ export default function UserTableRow({
 
         <TableCell component="th" scope="row" padding="none">
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name} src={avatarUrl} />
+            <Avatar alt={name} src={image} />
             <Typography variant="subtitle2" noWrap>
               {name}
             </Typography>
           </Stack>
         </TableCell>
 
+        <TableCell>
+          <Label color={(status === 'status' && 'error') || 'success'}>{status}</Label>
+        </TableCell>
+
         <TableCell>{species}</TableCell>
 
         <TableCell>{gender}</TableCell>
 
-        <TableCell align="center">{origin}</TableCell>
-
-        <TableCell>{status}</TableCell>
-
+    
         <TableCell>{origin}</TableCell>
+        <TableCell>{location}</TableCell>
 
         
 
-        <TableCell align="right">
-          <IconButton onClick={handleOpenMenu}>
-            <Iconify icon="eva:more-vertical-fill" />
-          </IconButton>
-        </TableCell>
+       
       </TableRow>
 
       <Popover
@@ -96,13 +92,13 @@ export default function UserTableRow({
 }
 
 UserTableRow.propTypes = {
-  avatarUrl: PropTypes.any,
+  image: PropTypes.any,
   species: PropTypes.any,
   handleClick: PropTypes.func,
   gender: PropTypes.any,
   name: PropTypes.any,
   origin: PropTypes.any,
-  image: PropTypes.any,
   selected: PropTypes.any,
+  location: PropTypes.any,
   status: PropTypes.string,
 };
