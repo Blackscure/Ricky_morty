@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
 import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
@@ -10,20 +10,15 @@ import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 
-import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function UserTableRow({
+export default function EpisodeTableRow({
   selected,
   name,
-  species,
-  gender,
-  origin,
-  status,
-  image,
-  location,
+  air_date,
+  episode,
   handleClick,
 }) {
   const [open, setOpen] = useState(null);
@@ -43,28 +38,16 @@ export default function UserTableRow({
 
         <TableCell component="th" scope="row" padding="none">
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name} src={image} />
+            {/* <Avatar alt={name} src={image} /> */}
             <Typography variant="subtitle2" noWrap>
               {name}
             </Typography>
           </Stack>
         </TableCell>
+        <TableCell>{air_date}</TableCell>
 
-        <TableCell>
-          <Label color={(status === 'status' && 'error') || 'success'}>{status}</Label>
-        </TableCell>
-
-        <TableCell>{species}</TableCell>
-
-        <TableCell>{gender}</TableCell>
-
-    
-        <TableCell>{origin}</TableCell>
-        <TableCell>{location}</TableCell>
-
-        
-
-       
+        <TableCell>{episode}</TableCell>
+        <TableCell><Button variant='outlined'>Characters</Button></TableCell>
       </TableRow>
 
       <Popover
@@ -91,14 +74,11 @@ export default function UserTableRow({
   );
 }
 
-UserTableRow.propTypes = {
-  image: PropTypes.any,
-  species: PropTypes.any,
+EpisodeTableRow.propTypes = {
+  air_date: PropTypes.any,
   handleClick: PropTypes.func,
-  gender: PropTypes.any,
   name: PropTypes.any,
-  origin: PropTypes.any,
   selected: PropTypes.any,
-  location: PropTypes.any,
-  status: PropTypes.string,
+  episode: PropTypes.any,
+
 };

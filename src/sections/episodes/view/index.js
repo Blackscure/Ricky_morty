@@ -1,1 +1,1 @@
-export { default as CharactersView } from './characters-view';
+export { default as EpisodesView } from './episodes-view';

@@ -34,6 +34,12 @@ const navConfig = [
     path: '/locations',
     icon: icon('arcticons:character-pad'),
   },
+
+  {
+    title: 'episodes',
+    path: '/episodes',
+    icon: icon('arcticons:character-pad'),
+  },
   
 
   // {

@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
-import { EpisodeView } from 'src/sections/episode/view';
+import { EpisodesView } from 'src/sections/episodes/view';
 
 // ----------------------------------------------------------------------
 
@@ -11,7 +11,7 @@ export default function EpisodesPage() {
         <title> Episode | Ricky Morty </title>
       </Helmet>
 
-      <EpisodeView />
+      <EpisodesView />
     </>
   );
 }
