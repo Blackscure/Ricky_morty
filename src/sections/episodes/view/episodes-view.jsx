@@ -16,6 +16,7 @@ import EpisodeTableToolbar from '../episode-table-toolbar';
 
 const EpisodesPage = () => {
   const [episodes, setEpisodes] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('name');
   const [selected, setSelected] = useState([]);
@@ -129,8 +130,6 @@ const EpisodesPage = () => {
                   { id: 'episode', label: 'Episode' },
                   { id: 'characters', label: 'Characters' },
                   { id: 'air_date', label: 'Air Date' },
-
-               
                   // ... other columns
                 ]}
               />
