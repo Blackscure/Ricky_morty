@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 import { Box } from '@mui/material';
@@ -13,7 +14,7 @@ import EpisodeTableRow from '../episode-table-row';
 import EpisodeTableHead from '../episode-table-head';
 import EpisodeTableToolbar from '../episode-table-toolbar';
 
-const CharactersPage = () => {
+const EpisodesPage = () => {
   const [episodes, setEpisodes] = useState([]);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('name');
@@ -22,12 +23,33 @@ const CharactersPage = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+
   useEffect(() => {
-    // Fetch data from the Rick and Morty API
-    fetch('https://rickandmortyapi.com/api/episode')
-      .then((response) => response.json())
-      .then((data) => setEpisodes(data.results));
-  }, []);
+    const fetchEpisodes = async () => {
+      try {
+        const response = await axios.get('https://rickandmortyapi.com/api/episode');
+        const episodesData = response.data.results;
+
+        // Fetch characters for each episode
+        const episodesWithCharacters = await Promise.all(
+          episodesData.map(async (episode) => {
+            const charactersResponse = await axios.all(episode.characters.map(characterUrl => axios.get(characterUrl)));
+            const charactersData = charactersResponse.map(character => character.data);
+            return { ...episode, characters: charactersData };
+          })
+        );
+
+        setEpisodes(episodesWithCharacters);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchEpisodes();
+  }, []); 
+
+
+
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
@@ -120,7 +142,9 @@ const CharactersPage = () => {
                       key={episode.id}
                       name={episode.name}
                       episode={episode.episode}
-                      characters={episode.characters.url}
+                      characters={episode.characters}
+
+                      // characters={episode.characters.map((character) => character)}
                       air_date={episode.air_date}
                       // ... other columns
                       selected={selected.indexOf(episode.name) !== -1}
@@ -146,4 +170,4 @@ const CharactersPage = () => {
   );
 };
 
-export default CharactersPage;
+export default EpisodesPage;
