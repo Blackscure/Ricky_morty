@@ -12,17 +12,7 @@ const navConfig = [
     path: '/',
     icon: icon('ic_analytics'),
   },
-  {
-    title: 'users',
-    path: '/user',
-    icon: icon('ic_user'),
-  },
 
-  {
-    title: 'roles',
-    path: '/roles',
-    icon: icon('oui:app-users-roles'),
-  },
   {
     title: 'characters',
     path: '/characters',
@@ -32,7 +22,7 @@ const navConfig = [
   {
     title: 'locations',
     path: '/locations',
-    icon: icon('arcticons:character-pad'),
+    icon: icon('mingcute:location-2-fill'),
   },
 
   {
