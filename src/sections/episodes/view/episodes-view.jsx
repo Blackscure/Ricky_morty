@@ -41,8 +41,10 @@ const EpisodesPage = () => {
         );
 
         setEpisodes(episodesWithCharacters);
+        setLoading(false); // Set loading to false after data is fetched
       } catch (error) {
         console.error('Error fetching data:', error);
+        setLoading(false); // Set loading to false after data is fetched
       }
     };
 
