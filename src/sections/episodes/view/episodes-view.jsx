@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
-import { Box } from '@mui/material';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
+import { Box,CircularProgress } from '@mui/material';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
@@ -50,6 +50,16 @@ const EpisodesPage = () => {
 
     fetchEpisodes();
   }, []); 
+
+
+  if (loading) {
+    // Show loader while data is being fetched
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
 
 
