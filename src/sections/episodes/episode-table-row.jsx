@@ -2,13 +2,15 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
+
+// import { useRouter } from 'src/routes/hooks';
 
 import Iconify from 'src/components/iconify';
 
@@ -18,16 +20,23 @@ export default function EpisodeTableRow({
   selected,
   name,
   air_date,
+  characters,
   episode,
   handleClick,
 }) {
   const [open, setOpen] = useState(null);
+  //  const router = useRouter();
 
  
 
   const handleCloseMenu = () => {
     setOpen(null);
   };
+
+  // const handleCharactersClick = () => {
+  //   // Navigate to the CharactersPage with the episode ID
+  //   router.push(`/characters/${episode}`);
+  // };
 
   return (
     <>
@@ -45,7 +54,25 @@ export default function EpisodeTableRow({
           </Stack>
         </TableCell>
         <TableCell>{episode}</TableCell>
-        <TableCell><Button variant='outlined'>Characters</Button></TableCell>
+        <TableCell>
+          <Stack direction="column" alignItems="start" spacing={1}>
+            {characters && characters.map((character, index) => (
+              <div key={index}>
+                <Typography variant="body2" noWrap>
+                  {character ? character.name : 'N/A'}
+                </Typography>
+                <Typography variant="caption" color="textSecondary" noWrap>
+                  Status: {character ? character.status : 'N/A'}
+                </Typography>
+                <Typography variant="caption" color="textSecondary" noWrap>
+                  Species: {character ? character.species : 'N/A'}
+                </Typography>
+              </div>
+            ))}
+          </Stack>
+        </TableCell>
+
+        {/* <TableCell><Button variant='outlined' onClick={handleCharactersClick}>Characters</Button></TableCell> */}
         <TableCell>{air_date}</TableCell>
        
       </TableRow>
@@ -80,5 +107,5 @@ EpisodeTableRow.propTypes = {
   name: PropTypes.any,
   selected: PropTypes.any,
   episode: PropTypes.any,
-
+  characters: PropTypes.array,
 };
