@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 
-import { Box } from '@mui/material';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
+import { Box,Typography } from '@mui/material';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
@@ -82,70 +82,67 @@ const CharactersPage = () => {
 
 
   return (
-    <Box>
-      {/* ... (existing code) */}
+    <><Typography variant="h3" fontWeight="bold" style={{ float: 'left' }}>
+      Characters
+    </Typography><Box>
 
-      <Card>
-        <CharacterTableToolbar
-          numSelected={selected.length}
-          filterName={filterName}
-          onFilterName={handleFilterByName}
-        />
+        <Card>
+          <CharacterTableToolbar
+            numSelected={selected.length}
+            filterName={filterName}
+            onFilterName={handleFilterByName} />
 
-        <Scrollbar>
-          <TableContainer sx={{ overflow: 'unset' }}>
-            <Table sx={{ minWidth: 800 }}>
-              <CharacterTableHead
-                order={order}
-                orderBy={orderBy}
-                rowCount={characters.length}
-                numSelected={selected.length}
-                onRequestSort={handleSort}
-                onSelectAllClick={handleSelectAllClick}
-                headLabel={[
-                  { id: 'name', label: 'Name' },
-                  { id: 'status', label: 'Status' },
-                  { id: 'species', label: 'Species' },
-                  { id: 'gender', label: 'Gender' },
-                  { id: 'origin', label: 'Origin' },
-                  { id: 'location', label: 'Location' },
-                  // ... other columns
-                ]}
-              />
-              <TableBody>
-                {dataFiltered
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((character) => (
-                    <CharacterTableRow
-                      key={character.id}
-                      image={character.image}
-                      name={character.name}
-                      species={character.species}
-                      status={character.status}
-                      gender={character.gender}
-                      origin={character.origin.name}
-                      location={character.location.name}
-                      // ... other columns
-                      selected={selected.indexOf(character.name) !== -1}
-                      handleClick={(event) => handleClick(event, character.name)}
-                    />
-                  ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Scrollbar>
+          <Scrollbar>
+            <TableContainer sx={{ overflow: 'unset' }}>
+              <Table sx={{ minWidth: 800 }}>
+                <CharacterTableHead
+                  order={order}
+                  orderBy={orderBy}
+                  rowCount={characters.length}
+                  numSelected={selected.length}
+                  onRequestSort={handleSort}
+                  onSelectAllClick={handleSelectAllClick}
+                  headLabel={[
+                    { id: 'name', label: 'Name' },
+                    { id: 'status', label: 'Status' },
+                    { id: 'species', label: 'Species' },
+                    { id: 'gender', label: 'Gender' },
+                    { id: 'origin', label: 'Origin' },
+                    { id: 'location', label: 'Location' },
+                    // ... other columns
+                  ]} />
+                <TableBody>
+                  {dataFiltered
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((character) => (
+                      <CharacterTableRow
+                        key={character.id}
+                        image={character.image}
+                        name={character.name}
+                        species={character.species}
+                        status={character.status}
+                        gender={character.gender}
+                        origin={character.origin.name}
+                        location={character.location.name}
+                        // ... other columns
+                        selected={selected.indexOf(character.name) !== -1}
+                        handleClick={(event) => handleClick(event, character.name)} />
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Scrollbar>
 
-        <TablePagination
-          page={page}
-          component="div"
-          count={characters.length}
-          rowsPerPage={rowsPerPage}
-          onPageChange={handleChangePage}
-          rowsPerPageOptions={[5, 10, 25]}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Card>
-    </Box>
+          <TablePagination
+            page={page}
+            component="div"
+            count={characters.length}
+            rowsPerPage={rowsPerPage}
+            onPageChange={handleChangePage}
+            rowsPerPageOptions={[5, 10, 25]}
+            onRowsPerPageChange={handleChangeRowsPerPage} />
+        </Card>
+      </Box></>
   );
 };
 

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
+import Stack from '@mui/material/Stack';
 import { Box, Card, Button, TextField, Typography } from '@mui/material';
 
 export default function ResidentPage() {
@@ -37,6 +38,11 @@ export default function ResidentPage() {
   return (
     <Card style={{ paddingTop: '16px' }}>
       <Box p={3}>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+        <Typography variant="h4">Residet Infomation</Typography>
+
+      
+      </Stack>
         <Typography variant="h5">{residentData.name}</Typography>
         <Typography variant="body1" component="p">
           Status: {residentData.status}

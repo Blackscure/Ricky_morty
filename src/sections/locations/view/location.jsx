@@ -153,6 +153,7 @@ export default function LocationPage() {
   }
 
   return (
+    
     <Box>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Locations</Typography>
