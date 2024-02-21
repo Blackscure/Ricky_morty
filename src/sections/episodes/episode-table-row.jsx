@@ -7,8 +7,11 @@ import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
+import Collapse from '@mui/material/Collapse';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import { createSvgIcon } from '@mui/material/utils';
 
 // import { useRouter } from 'src/routes/hooks';
 
@@ -25,6 +28,25 @@ export default function EpisodeTableRow({
   handleClick,
 }) {
   const [open, setOpen] = useState(null);
+  const [expanded, setExpanded] = useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
+  const PlusIcon = createSvgIcon(
+    // credit: plus icon from https://heroicons.com/
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+    </svg>,
+    'Plus',
+  );
   //  const router = useRouter();
 
  
@@ -56,19 +78,41 @@ export default function EpisodeTableRow({
         <TableCell>{episode}</TableCell>
         <TableCell>
           <Stack direction="column" alignItems="start" spacing={1}>
-            {characters && characters.map((character, index) => (
-              <div key={index}>
-                <Typography variant="body2" noWrap>
-                  {character ? character.name : 'N/A'}
-                </Typography>
-                <Typography variant="caption" color="textSecondary" noWrap>
-                  Status: {character ? character.status : 'N/A'}
-                </Typography>
-                <Typography variant="caption" color="textSecondary" noWrap>
-                  Species: {character ? character.species : 'N/A'}
-                </Typography>
-              </div>
-            ))}
+            {characters && characters.length > 0 && (
+              <>
+                <IconButton
+                  aria-expanded={expanded}
+                  onClick={handleExpandClick}
+                  aria-label="show more"
+                >
+                      <PlusIcon color="secondary" />
+
+                </IconButton>
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                  {characters.map((character, index) => (
+                    <div key={index}>
+                      <Typography variant="body2" noWrap>
+                        {character ? character.name : 'N/A'}
+                      </Typography>
+                      <Typography
+                        variant="caption"
+                        color="textSecondary"
+                        noWrap
+                      >
+                        Status: {character ? character.status : 'N/A'}
+                      </Typography>
+                      <Typography
+                        variant="caption"
+                        color="textSecondary"
+                        noWrap
+                      >
+                        Species: {character ? character.species : 'N/A'}
+                      </Typography>
+                    </div>
+                  ))}
+                </Collapse>
+              </>
+            )}
           </Stack>
         </TableCell>
 
