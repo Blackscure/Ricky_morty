@@ -2,9 +2,13 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
+import { Box, Card, Button, TextField, Typography } from '@mui/material';
+
 export default function ResidentPage() {
   const { residentId } = useParams();
   const [residentData, setResidentData] = useState(null);
+  const [note, setNote] = useState('');
+  const [savedNote, setSavedNote] = useState(localStorage.getItem(`residentNote_${residentId}`));
 
   useEffect(() => {
     const fetchResidentData = async () => {
@@ -24,13 +28,46 @@ export default function ResidentPage() {
     return <div>Loading...</div>;
   }
 
-  // Render your ResidentPage component with the fetched data
+  const handleAddNote = () => {
+    localStorage.setItem(`residentNote_${residentId}`, note);
+    setSavedNote(note);
+    setNote('');
+  };
+
   return (
-    <div>
-      <h2>{residentData.name}</h2>
-      <p>Status: {residentData.status}</p>
-      <p>Species: {residentData.species}</p>
-      {/* Add more details based on your API response */}
-    </div>
+    <Card style={{ paddingTop: '16px' }}>
+      <Box p={3}>
+        <Typography variant="h5">{residentData.name}</Typography>
+        <Typography variant="body1" component="p">
+          Status: {residentData.status}
+        </Typography>
+        <Typography variant="body1" component="p">
+          Species: {residentData.species}
+        </Typography>
+        <Typography variant="body1" component="p">
+          Gender: {residentData.gender}
+        </Typography>
+        {/* Add more details based on your API response */}
+        
+        <Box mt={2}>
+          <TextField
+            label="Add Note"
+            variant="outlined"
+            fullWidth
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+          />
+          <Button variant="contained" color="primary" onClick={handleAddNote} style={{ marginTop: '8px' }}>
+            Add Note
+          </Button>
+        </Box>
+
+        {savedNote && (
+          <Typography variant="body2" mt={2}>
+            Note: {savedNote}
+          </Typography>
+        )}
+      </Box>
+    </Card>
   );
 }
