@@ -7,10 +7,7 @@ import DashboardLayout from 'src/layouts/dashboard';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const UserPage = lazy(() => import('src/pages/user'));
-export const LoginPage = lazy(() => import('src/pages/login'));
-export const RegisterPage = lazy(() => import('src/pages/register'));
 export const CreateUserPage = lazy(() => import('src/pages/create-user'));
-export const RolesPage = lazy(() => import('src/pages/roles'));
 export const CharactersPage = lazy(() => import('src/pages/characters'));
 export const LocationsPage = lazy(() => import('src/pages/location'));
 export const ResidentPage = lazy(() => import('src/sections/locations/view/resident'));
@@ -38,10 +35,7 @@ export default function Router() {
           path: 'create-user',
           element: <CreateUserPage />,
         },
-        {
-          path: 'roles',
-          element: <RolesPage />,
-        },
+      
         {
           path: 'characters',
           element: <CharactersPage/>,
@@ -66,15 +60,7 @@ export default function Router() {
         }
       ],
     },
-    {
-      path: 'login',
-      element: <LoginPage />,
-    },
-    {
-      path: 'register',
-      element: <RegisterPage />,
-    },
-
+   
    
     {
       path: '404',
