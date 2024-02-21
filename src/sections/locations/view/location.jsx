@@ -6,7 +6,6 @@ import { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
-import Button from '@mui/material/Button';
 import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import { Box,CircularProgress } from '@mui/material';
@@ -17,7 +16,6 @@ import { useRouter } from 'src/routes/hooks';
 
 import { users } from 'src/_mock/user';
 
-import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 
 import TableNoData from '../table-no-data';
@@ -172,9 +170,7 @@ export default function LocationPage() {
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Locations</Typography>
 
-        <Button variant="contained" onClick={goToCreateUser} color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
-          New User
-        </Button>
+      
       </Stack>
 
       <Card>
