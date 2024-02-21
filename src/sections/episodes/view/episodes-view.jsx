@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
 import Stack from '@mui/material/Stack';
+import TableRow from '@mui/material/TableRow';
 import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
-import { Box,CircularProgress } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
@@ -25,7 +27,6 @@ const EpisodesPage = () => {
   const [filterName, setFilterName] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
 
   useEffect(() => {
     const fetchEpisodes = async () => {
@@ -51,20 +52,7 @@ const EpisodesPage = () => {
     };
 
     fetchEpisodes();
-  }, []); 
-
-
-  if (loading) {
-    // Show loader while data is being fetched
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
-
-
-
+  }, []);
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
@@ -117,14 +105,10 @@ const EpisodesPage = () => {
     episode.name.toLowerCase().includes(filterName.toLowerCase())
   );
 
-
   return (
     <Box>
-      {/* ... (existing code) */}
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Episodes</Typography>
-
-      
       </Stack>
 
       <Card>
@@ -152,24 +136,31 @@ const EpisodesPage = () => {
                   // ... other columns
                 ]}
               />
-              <TableBody>
-                {dataFiltered
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((episode) => (
-                    <EpisodeTableRow
-                      key={episode.id}
-                      name={episode.name}
-                      episode={episode.episode}
-                      characters={episode.characters}
-
-                      // characters={episode.characters.map((character) => character)}
-                      air_date={episode.air_date}
-                      // ... other columns
-                      selected={selected.indexOf(episode.name) !== -1}
-                      handleClick={(event) => handleClick(event, episode.name)}
-                    />
-                  ))}
-              </TableBody>
+              {loading ? (
+                <TableBody>
+                  <TableRow>
+                    <TableCell colSpan={4} align="center">
+                      <CircularProgress />
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              ) : (
+                <TableBody>
+                  {dataFiltered
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((episode) => (
+                      <EpisodeTableRow
+                        key={episode.id}
+                        name={episode.name}
+                        episode={episode.episode}
+                        characters={episode.characters}
+                        air_date={episode.air_date}
+                        selected={selected.indexOf(episode.name) !== -1}
+                        handleClick={(event) => handleClick(event, episode.name)}
+                      />
+                    ))}
+                </TableBody>
+              )}
             </Table>
           </TableContainer>
         </Scrollbar>
@@ -184,8 +175,6 @@ const EpisodesPage = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Card>
-        {/* Pass episodes data to AppView */}
-        {/* <AppView episodes={episodes} /> */}
     </Box>
   );
 };

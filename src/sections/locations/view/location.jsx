@@ -6,15 +6,15 @@ import { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
+import TableRow from '@mui/material/TableRow';
 import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
-import { Box,CircularProgress } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
 import { useRouter } from 'src/routes/hooks';
-
-import { users } from 'src/_mock/user';
 
 import Scrollbar from 'src/components/scrollbar';
 
@@ -29,31 +29,16 @@ import { emptyRows, applyFilter, getComparator } from '../utils';
 
 export default function LocationPage() {
   const [page, setPage] = useState(0);
-
   const [order, setOrder] = useState('asc');
-
   const [selected, setSelected] = useState([]);
-
   const [orderBy, setOrderBy] = useState('name');
-
   const [filterName, setFilterName] = useState('');
-
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
   const [locations, setLocations] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
-  // eslint-disable-next-line no-unused-vars
-  const [loading, setLoading] = useState(true);
-  
-
-
   const router = useRouter();
-
- 
-
 
   useEffect(() => {
     const fetchEpisodes = async () => {
@@ -79,17 +64,7 @@ export default function LocationPage() {
     };
 
     fetchEpisodes();
-  }, [page]); 
-
-
-  if (loading) {
-    // Show loader while data is being fetched
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
+  }, [page]);
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
@@ -101,7 +76,7 @@ export default function LocationPage() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = users.map((n) => n.name);
+      const newSelecteds = locations.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -150,15 +125,12 @@ export default function LocationPage() {
 
   const goToCreateUser = () => {
     router.push('/create-user');
-  }
+  };
 
   return (
-    
     <Box>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Locations</Typography>
-
-      
       </Stack>
 
       <Card>
@@ -174,7 +146,7 @@ export default function LocationPage() {
               <UserTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={users.length}
+                rowCount={locations.length}
                 numSelected={selected.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
@@ -182,30 +154,36 @@ export default function LocationPage() {
                   { id: 'name', label: 'Name' },
                   { id: 'type', label: 'Type' },
                   { id: 'residents', label: 'Residents' },
-                
-                 
                 ]}
               />
               <TableBody>
-                {locations
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((location) => (
-                    <UserTableRow
-                      key={location.id}
-                      name={location.name}
-                      type={location.type}
-                      residents={location.residents}
-                      selected={selected.indexOf(location.name) !== -1}
-                      handleClick={(event) => handleClick(event, location.name)}
+                {loading ? (
+                  <TableRow>
+                    <TableCell colSpan={3} align="center">
+                      <CircularProgress />
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  <>
+                    {locations
+                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      .map((location) => (
+                        <UserTableRow
+                          key={location.id}
+                          name={location.name}
+                          type={location.type}
+                          residents={location.residents}
+                          selected={selected.indexOf(location.name) !== -1}
+                          handleClick={(event) => handleClick(event, location.name)}
+                        />
+                      ))}
+                    <TableEmptyRows
+                      height={77}
+                      emptyRows={emptyRows(page, rowsPerPage, locations.length)}
                     />
-                  ))}
-
-                <TableEmptyRows
-                  height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, users.length)}
-                />
-
-                {notFound && <TableNoData query={filterName} />}
+                    {notFound && <TableNoData query={filterName} />}
+                  </>
+                )}
               </TableBody>
             </Table>
           </TableContainer>
