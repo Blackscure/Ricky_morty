@@ -3,13 +3,13 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
 import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
+import { Box,CircularProgress } from '@mui/material';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
@@ -54,20 +54,57 @@ export default function LocationPage() {
 
   const router = useRouter();
 
+  // useEffect(() => {
+  //   const fetchLocations = async () => {
+  //     try {
+  //       const response = await axios.get(`https://rickandmortyapi.com/api/location?page=${page + 1}`);
+  //       setLocations(response.data.results);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       setError(error.message);
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchLocations();
+  // }, [page]);
+
+
   useEffect(() => {
-    const fetchLocations = async () => {
+    const fetchEpisodes = async () => {
       try {
         const response = await axios.get(`https://rickandmortyapi.com/api/location?page=${page + 1}`);
-        setLocations(response.data.results);
-        setLoading(false);
+        const locationsData = response.data.results;
+
+        // Fetch characters for each episode
+        const locationsWithResidents = await Promise.all(
+          locationsData.map(async (location) => {
+            const residentsResponse = await axios.all(location.residents.map(residentUrl => axios.get(residentUrl)));
+            const residentsData = residentsResponse.map(character => character.data);
+            return { ...location, residents: residentsData };
+          })
+        );
+
+        setLocations(locationsWithResidents);
+        setLoading(false); // Set loading to false after data is fetched
       } catch (error) {
-        setError(error.message);
-        setLoading(false);
+        console.error('Error fetching data:', error);
+        setLoading(false); // Set loading to false after data is fetched
       }
     };
 
-    fetchLocations();
-  }, [page]);
+    fetchEpisodes();
+  }, [page]); 
+
+
+  if (loading) {
+    // Show loader while data is being fetched
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
@@ -160,6 +197,7 @@ export default function LocationPage() {
                 headLabel={[
                   { id: 'name', label: 'Name' },
                   { id: 'type', label: 'Type' },
+                  { id: 'residents', label: 'Residents' },
                 
                  
                 ]}
@@ -172,6 +210,7 @@ export default function LocationPage() {
                       key={location.id}
                       name={location.name}
                       type={location.type}
+                      residents={location.residents}
                       selected={selected.indexOf(location.name) !== -1}
                       handleClick={(event) => handleClick(event, location.name)}
                     />

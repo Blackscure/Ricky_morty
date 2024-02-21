@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
-import { Box } from '@mui/material';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
+import { Box,CircularProgress } from '@mui/material';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
@@ -16,6 +16,7 @@ import EpisodeTableToolbar from '../episode-table-toolbar';
 
 const EpisodesPage = () => {
   const [episodes, setEpisodes] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('name');
   const [selected, setSelected] = useState([]);
@@ -40,13 +41,25 @@ const EpisodesPage = () => {
         );
 
         setEpisodes(episodesWithCharacters);
+        setLoading(false); // Set loading to false after data is fetched
       } catch (error) {
         console.error('Error fetching data:', error);
+        setLoading(false); // Set loading to false after data is fetched
       }
     };
 
     fetchEpisodes();
   }, []); 
+
+
+  if (loading) {
+    // Show loader while data is being fetched
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
 
 
@@ -129,8 +142,6 @@ const EpisodesPage = () => {
                   { id: 'episode', label: 'Episode' },
                   { id: 'characters', label: 'Characters' },
                   { id: 'air_date', label: 'Air Date' },
-
-               
                   // ... other columns
                 ]}
               />
@@ -166,6 +177,8 @@ const EpisodesPage = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Card>
+        {/* Pass episodes data to AppView */}
+        {/* <AppView episodes={episodes} /> */}
     </Box>
   );
 };
