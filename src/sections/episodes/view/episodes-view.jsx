@@ -3,7 +3,9 @@ import { useState, useEffect } from 'react';
 
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
+import Stack from '@mui/material/Stack';
 import TableBody from '@mui/material/TableBody';
+import Typography from '@mui/material/Typography';
 import { Box,CircularProgress } from '@mui/material';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
@@ -119,6 +121,11 @@ const EpisodesPage = () => {
   return (
     <Box>
       {/* ... (existing code) */}
+      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+        <Typography variant="h4">Episodes</Typography>
+
+      
+      </Stack>
 
       <Card>
         <EpisodeTableToolbar

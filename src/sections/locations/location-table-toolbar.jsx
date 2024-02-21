@@ -33,7 +33,7 @@ export default function LocationTableToolbar({ numSelected, filterName, onFilter
         <OutlinedInput
           value={filterName}
           onChange={onFilterName}
-          placeholder="Search user..."
+          placeholder="Search by name..."
           startAdornment={
             <InputAdornment position="start">
               <Iconify
