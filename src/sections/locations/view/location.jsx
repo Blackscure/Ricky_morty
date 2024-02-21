@@ -52,20 +52,7 @@ export default function LocationPage() {
 
   const router = useRouter();
 
-  // useEffect(() => {
-  //   const fetchLocations = async () => {
-  //     try {
-  //       const response = await axios.get(`https://rickandmortyapi.com/api/location?page=${page + 1}`);
-  //       setLocations(response.data.results);
-  //       setLoading(false);
-  //     } catch (error) {
-  //       setError(error.message);
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchLocations();
-  // }, [page]);
+ 
 
 
   useEffect(() => {
