@@ -15,6 +15,7 @@ export default function LocationTableRow({
   selected,
   name,
   type,
+  residents,
   handleClick,
 }) {
   return (
@@ -32,6 +33,23 @@ export default function LocationTableRow({
       </TableCell>
 
       <TableCell>{type}</TableCell>
+      <TableCell>
+          <Stack direction="column" alignItems="start" spacing={1}>
+            {residents && residents.map((resident, index) => (
+              <div key={index}>
+                <Typography variant="body2" noWrap>
+                  {resident ? resident.name : 'N/A'}
+                </Typography>
+                <Typography variant="caption" color="textSecondary" noWrap>
+                  Status: {resident ? resident.status : 'N/A'}
+                </Typography>
+                <Typography variant="caption" color="textSecondary" noWrap>
+                  Species: {resident ? resident.species : 'N/A'}
+                </Typography>
+              </div>
+            ))}
+          </Stack>
+        </TableCell>
     </TableRow>
   );
 }
@@ -42,5 +60,6 @@ LocationTableRow.propTypes = {
   handleClick: PropTypes.func,
   name: PropTypes.any,
   selected: PropTypes.any,
+  residents: PropTypes.array,
  
 };

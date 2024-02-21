@@ -177,6 +177,8 @@ const EpisodesPage = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Card>
+        {/* Pass episodes data to AppView */}
+        {/* <AppView episodes={episodes} /> */}
     </Box>
   );
 };
