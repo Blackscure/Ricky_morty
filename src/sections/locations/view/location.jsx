@@ -43,23 +43,35 @@ export default function LocationPage() {
   useEffect(() => {
     const fetchEpisodes = async () => {
       try {
+        setLoading(true); // Set loading to true when starting the fetch
+
         const response = await axios.get(`https://rickandmortyapi.com/api/location?page=${page + 1}`);
         const locationsData = response.data.results;
 
-        // Fetch characters for each episode
+        // Fetch characters for each episode with a delay and retry mechanism
         const locationsWithResidents = await Promise.all(
-          locationsData.map(async (location) => {
-            const residentsResponse = await axios.all(location.residents.map(residentUrl => axios.get(residentUrl)));
-            const residentsData = residentsResponse.map(character => character.data);
-            return { ...location, residents: residentsData };
+          locationsData.map(async (location, index) => {
+            try {
+              // Introduce a delay between consecutive requests (e.g., 500 milliseconds)
+              if (index > 0) {
+                await new Promise(resolve => setTimeout(resolve, 500));
+              }
+
+              const residentsResponse = await axios.all(location.residents.map(residentUrl => axios.get(residentUrl)));
+              const residentsData = residentsResponse.map(character => character.data);
+              return { ...location, residents: residentsData };
+            } catch (residentError) {
+              console.error('Error fetching resident data:', residentError);
+              return location; // Continue with the location data even if resident data fails
+            }
           })
         );
 
         setLocations(locationsWithResidents);
-        setLoading(false); // Set loading to false after data is fetched
       } catch (error) {
         console.error('Error fetching data:', error);
-        setLoading(false); // Set loading to false after data is fetched
+      } finally {
+        setLoading(false); // Set loading to false whether the fetch succeeds or encounters an error
       }
     };
 

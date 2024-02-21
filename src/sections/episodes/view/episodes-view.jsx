@@ -31,23 +31,35 @@ const EpisodesPage = () => {
   useEffect(() => {
     const fetchEpisodes = async () => {
       try {
+        setLoading(true); // Set loading to true when starting the fetch
+
         const response = await axios.get('https://rickandmortyapi.com/api/episode');
         const episodesData = response.data.results;
 
-        // Fetch characters for each episode
+        // Fetch characters for each episode with a delay and retry mechanism
         const episodesWithCharacters = await Promise.all(
-          episodesData.map(async (episode) => {
-            const charactersResponse = await axios.all(episode.characters.map(characterUrl => axios.get(characterUrl)));
-            const charactersData = charactersResponse.map(character => character.data);
-            return { ...episode, characters: charactersData };
+          episodesData.map(async (episode, index) => {
+            try {
+              // Introduce a delay between consecutive requests (e.g., 500 milliseconds)
+              if (index > 0) {
+                await new Promise(resolve => setTimeout(resolve, 500));
+              }
+
+              const charactersResponse = await axios.all(episode.characters.map(characterUrl => axios.get(characterUrl)));
+              const charactersData = charactersResponse.map(character => character.data);
+              return { ...episode, characters: charactersData };
+            } catch (characterError) {
+              console.error('Error fetching character data:', characterError);
+              return episode; // Continue with the episode data even if character data fails
+            }
           })
         );
 
         setEpisodes(episodesWithCharacters);
-        setLoading(false); // Set loading to false after data is fetched
       } catch (error) {
         console.error('Error fetching data:', error);
-        setLoading(false); // Set loading to false after data is fetched
+      } finally {
+        setLoading(false); // Set loading to false whether the fetch succeeds or encounters an error
       }
     };
 
