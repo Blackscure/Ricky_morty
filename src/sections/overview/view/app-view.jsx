@@ -15,7 +15,7 @@ export default function AppView() {
         <Grid xs={12} sm={6} md={4}>
           <AppWidgetSummary
             title="Episodes"
-            total={714000}
+            total={51}
             color="success"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_bag.png" />}
           />
@@ -24,7 +24,7 @@ export default function AppView() {
         <Grid xs={12} sm={6} md={4}>
           <AppWidgetSummary
             title="Characters"
-            total={1352831}
+            total={826}
             color="info"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_users.png" />}
           />
@@ -35,7 +35,7 @@ export default function AppView() {
         <Grid xs={12} sm={6} md={4}>
           <AppWidgetSummary
             title="Locations"
-            total={234}
+            total={126}
             color="error"
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_message.png" />}
           />
