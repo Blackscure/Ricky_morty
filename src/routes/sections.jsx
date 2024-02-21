@@ -13,6 +13,7 @@ export const CreateUserPage = lazy(() => import('src/pages/create-user'));
 export const RolesPage = lazy(() => import('src/pages/roles'));
 export const CharactersPage = lazy(() => import('src/pages/characters'));
 export const LocationsPage = lazy(() => import('src/pages/location'));
+export const ResidentPage = lazy(() => import('src/sections/locations/view/resident'));
 export const EpisodePage = lazy(() => import('src/pages/episodes'));
 export const CharactersPerEpisode = lazy(() => import('src/sections/episodes/view/characters-per-episode'));
 
@@ -58,6 +59,10 @@ export default function Router() {
         {
           path: 'characters/:episodeId',
           element: <CharactersPerEpisode/>,
+        },
+        {
+          path: 'resident/:residentId',
+          element: <ResidentPage/>,
         }
       ],
     },
